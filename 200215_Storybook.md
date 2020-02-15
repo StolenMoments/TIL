@@ -41,8 +41,8 @@ export default {
   component: Hello // 어떤 컴포넌트를 문서화 할지 명시
 };
 
-export const standard = () => <Hello name="Storybook" />; // 기본 화면을 보여줌
-export const big = () => <Hello name="Storybook" big />; // big 값이 들어갈 경우에 화면을 보여줌
+export const standard = () => <Hello />; // 기본 화면을 보여줌
+export const big = () => <Hello big />; // big 값이 들어갈 경우에 화면을 보여줌
 ```
 
 ### 4. 스토리북에서 확인
