@@ -2,7 +2,7 @@
 
 - 설치
   - yarn add styled-components
-  - VSCode를 사용하므로 vscode-styled-components 라는 extension 같이 설치함.
+  - 'vscode-styled-components' VSCode extension 설치하면 좋음.
   
 - 사용법
 
