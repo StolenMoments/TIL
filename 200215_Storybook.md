@@ -45,5 +45,52 @@ export const standard = () => <Hello />; // 기본 화면을 보여줌
 export const big = () => <Hello big />; // big 값이 들어갈 경우에 화면을 보여줌
 ```
 
-### 4. 스토리북에서 확인
-- yarn storybook 실행해서 확인.
+### 4. 스토리북에서 확인 - yarn storybook
+- components 그룹의 basic/hello 를 보면 standart, big 두 가지 화면을 확인할 수 있다.
+
+
+### 5. knobs 애드온 적용하기
+https://medium.com/storybookjs/declarative-storybook-configuration-49912f77b78
+
+- 5.3 버전 부터 설정파일은 main.js 하나로 통일됨.
+- knobs 설치
+```sh
+$ yarn add --dev @storybook/addon-knobs
+```
+- .storybook/main.js 수정
+```javascript
+module.exports = {
+  stories: ['../src/**/*.stories.js'],
+  addons: [
+    '@storybook/preset-create-react-app',
+    '@storybook/addon-actions',
+    '@storybook/addon-links',
+    '@storybook/addon-knobs/register', // 추가할 애드온을 적어주면 된다.
+  ],
+};
+```
+- Hello.stories.js 에서 사용해보자.
+```javascript
+import React from 'react';
+import Hello from '../components/Hello'
+import { withKnobs, text, boolean } from '@storybook/addon-knobs'
+
+export default {
+    title: 'components|basic/Hello', // 스토리북에서 보여질 그룹과 경로를 명시
+    component: Hello, // 어떤 컴포넌트를 문서화 할지 명시
+    decorators: [withKnobs] // withKnobs 함수를 적용. 데코레이터라 부른다.
+};
+
+export const hello = () => {
+    // knobs 만들기
+    const big = boolean('big', false);
+    const name = text('name', '기본값');
+    return <Hello name={name} big={big} />;
+};
+hello.story = {
+    name: 'Default 상태' // 스토리북에서 보여지는 이름 (standard, big 같이)
+};
+
+export const standard = () => <Hello name="Storybook" />;
+export const big = () => <Hello name="Storybook" big />;
+```
