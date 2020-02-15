@@ -53,6 +53,7 @@ export const big = () => <Hello big />; // big 값이 들어갈 경우에 화면
 https://medium.com/storybookjs/declarative-storybook-configuration-49912f77b78
 
 - 5.3 버전 부터 설정파일은 main.js 하나로 통일됨.
+- 컴포넌트의 props 를 바로 스토리북 화면에 반영해서 볼 수 있게 해주는 애드온.
 - knobs 설치
 ```sh
 $ yarn add --dev @storybook/addon-knobs
@@ -89,6 +90,46 @@ export const hello = () => {
 };
 hello.story = {
     name: 'Default 상태' // 스토리북에서 보여지는 이름 (standard, big 같이)
+};
+
+export const standard = () => <Hello name="Storybook" />;
+export const big = () => <Hello name="Storybook" big />;
+```
+
+- 자세한 스펙 : https://www.npmjs.com/package/@storybook/addon-knobs#available-knobs
+
+### 6. Action 애드온 적용하기
+
+- Action 애드온은 컴포넌트를 통해 호출된 특정 함수와 파라미터 정보를 확인할 수 있게 해준다.
+- 별도 설치 필요없음.
+
+```javascript
+import React from 'react';
+import Hello from '../components/Hello'
+import { withKnobs, text, boolean } from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
+
+export default {
+    title: 'components|basic/Hello', // 스토리북에서 보여질 그룹과 경로를 명시
+    component: Hello, // 어떤 컴포넌트를 문서화 할지 명시
+    decorators: [withKnobs] // withKnobs 함수를 적용. 데코레이터라 부른다.
+};
+
+export const hello = () => {
+    // knobs 만들기
+    const big = boolean('big', false);
+    const name = text('name', '기본값');
+    return <Hello 
+    name={name} 
+    big={big} 
+    onClick1={action('onClick1 액션')}
+    onClick2={action('onClick2 액션')}
+    />;
+};
+
+hello.story = {
+    name: 'Default 상태',// 스토리북에서 보여지는 이름 (standard, big 같이)
+
 };
 
 export const standard = () => <Hello name="Storybook" />;
