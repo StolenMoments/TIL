@@ -1,0 +1,32 @@
+# React - 리액트를 다루는 기술
+
+### 이벤트 다루기
+
+- onKeyPress : 키가 입력됐을 때 이벤트 처리. 키는 e.key === "Enter" 식으로 조회가 가능.
+- onChange : 변화가 생겼을 때 이벤트 처리. 객체를 갱신할 때, { ...form, [e.target.name]: e.target.value } 식으로 바꾸면 깔끔하다.
+- onClick : 클릭이 입력됐을 때 이벤트 처리.
+
+
+### ref
+
+- DOM을 직접적으로 건드려야할 때 사용.
+  - 특정 input에 포커스
+  - 스크롤 박스 조작
+  - Canvas 요소에 그림 그리기
+  
+```javascript
+
+const input = useRef();
+
+(...)
+
+
+const handleOnClick = () => {
+  input.current.focus(); // onClick 이벤트 발생 시, 커서가 ref 위치(아래 적혀있는 button)에 포커싱된다.
+}
+
+(...)
+                <button ref={input} onClick={handleButtonClick}>검증하기</button>
+
+
+```
